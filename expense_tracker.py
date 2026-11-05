@@ -1,4 +1,18 @@
-expenses = []
+import json
+
+def save_data():
+    with open('expenses.json', 'w', encoding='utf-8') as file:
+        json.dump(expenses, file, ensure_ascii=False, indent=4)
+
+def load_data():
+    try:
+        with open('expenses.json', 'r', encoding='utf-8') as file:
+            loaded_expenses = json.load(file)
+            return loaded_expenses
+    except FileNotFoundError:
+        return []
+
+expenses = load_data()
 
 def safe_float(prompt):
     while True:
@@ -45,6 +59,7 @@ def main():
             category = input("На что потратил? ")
             amount = safe_float("Сколько? ")
             add_expense(category, amount)
+            save_data()  # Сохраняем сразу после добавления!
             print("Расход добавлен!")
         elif choice == "2":
             show_expenses()
