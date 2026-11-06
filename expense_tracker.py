@@ -51,25 +51,40 @@ def main():
         print("1. Добавить расход")
         print("2. Показать все расходы")
         print("3. Статистика")
-        print("4. Выход")
+        print("4. Очистить все данные")
+        print("5. Выход")
         
-        choice = input("Выбери пункт (1-4): ")
+        choice = input("Выбери пункт (1-5): ")
         
         if choice == "1":
             category = input("На что потратил? ")
             amount = safe_float("Сколько? ")
             add_expense(category, amount)
-            save_data()  # Сохраняем сразу после добавления!
+            save_data()
             print("Расход добавлен!")
         elif choice == "2":
             show_expenses()
         elif choice == "3":
             get_stats()
         elif choice == "4":
+            while True:
+                confirm = input("Вы уверены?(да/нет): ").lower()
+                if confirm == "да":
+                    expenses.clear()
+                    save_data()
+                    print("Все данные удалены.")
+                    break
+                elif confirm == "нет":
+                    print("Отмена")
+                    break
+                else:
+                    print("Введите да/нет.")
+            
+        elif choice == "5":
             print("Выход...")
             break
         else:
-            print("Неверный ввод, выбери от 1 до 4.")
+            print("Неверный ввод, выбери от 1 до 5.")
 
 if __name__ == "__main__":
     main()
